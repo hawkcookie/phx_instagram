@@ -7,7 +7,7 @@ defmodule Instagram.Posts do
   alias Instagram.Repo
 
   alias Instagram.Posts.Post
-
+  alias Instagram.Accounts.User
   @doc """
   Returns the list of posts.
 
@@ -35,7 +35,10 @@ defmodule Instagram.Posts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_post!(id), do: Repo.get!(Post, id)
+  def get_post!(id) do
+    IO.puts "っっっっっっっっっっっっっっっっっっっっf"
+    Repo.get!(Post, id)
+  end
 
   @doc """
   Creates a post.
@@ -50,6 +53,7 @@ defmodule Instagram.Posts do
 
   """
   def create_post(attrs \\ %{}) do
+    IO.inspect attrs
     %Post{}
     |> Post.changeset(attrs)
     |> Repo.insert()
@@ -101,4 +105,18 @@ defmodule Instagram.Posts do
   def change_post(%Post{} = post) do
     Post.changeset(post, %{})
   end
+
+  @doc """
+    Returns the list of posts created by the user
+  """
+
+  def list_posts(%Instagram.Accounts.User{} = user), do: Repo.all(Post.filter_by_user(Post, user))
+
+  @doc """
+  Gets a single post created by the user
+  """
+  def get_post!(id, %Instagram.Accounts.User{} = user) do
+    Repo.get!(Post.filter_by_user(Post, user), id)
+  end
+
 end

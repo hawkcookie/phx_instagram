@@ -74,3 +74,7 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :instagram, InstagramWeb.Guardian,
+  issuer: "instagram",
+  secret_key: "24NSuAqgGlpqJEATha9RFfbfAKRwwZkftXgbq0RdegoROtmKEF8PkHPPETU3jwxT"
